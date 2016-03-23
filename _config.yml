@@ -68,3 +68,5 @@ theme: next
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type:
+
+avatar: /uploads/avatar.vy.jpg
