@@ -1,5 +1,6 @@
 title: 一周成为Emacs新手
 date: 2016-03-23 20:51:29
+categories: ONE
 tags:
     - one
     - Emacs
