@@ -1,9 +1,10 @@
 title: 使用TMUX
 date: 2016-04-10 20:21:23
+categories: ONE
 tags:
     - tmux
-    - one
-    - tool
+    - shell
+    - linux    
 ---
 
 ## WHY
