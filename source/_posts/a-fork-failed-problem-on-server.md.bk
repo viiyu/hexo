@@ -1,0 +1,66 @@
+title: a fork failed problem on server
+date: 2016-05-02 22:57:53
+categories: Practice
+tags:
+    - linux
+    - cpp
+---
+## 问题
+我们服务器上的一个服务无法正常运行，经过师兄排查，发现是使用fork去启动服务时，由于内存不足导致fork失败。于是，我做了一个小实验，去窥探一下fork的性能。
+
+## 分析
+``` cpp
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <sys/sysinfo.h>
+
+void printMemStat() {
+    struct sysinfo si;
+    sysinfo(&si);
+    printf("===\n");
+    printf("Total: %llu\n", si.totalram);
+    printf("Free : %llu\n", si.freeram);
+}
+
+int main() {
+    printf("before malloc\n");
+    printMemStat();
+    int x;
+    long len = 400000000;
+    char *array = (char *)malloc(len*sizeof(char));
+    long i = 0;
+    for (; i<len; i++) {
+        array[i] = 1;
+    }
+    printf("\nbefore fork\n");
+    printMemStat();
+    int pid = fork();  //vfork()
+    if (pid==0) {
+        /*child*/
+        printf("\nchild\n");
+        printMemStat();
+        i = 0;
+        for(; i<len/2; i++){
+            array[i] = 2;
+        }
+        printMemStat();
+        for (; i<len; i++) {
+            array[i] = 2;
+        }
+        printMemStat();
+        // exit(0);
+    } else if (pid < 0) {
+        printf("\nfork failed\n");
+    } else {
+        /*parent*/
+        sleep(10);
+        printf("\nparent\n");
+        printMemStat();
+    }
+    free(array);
+    return 0;
+}
+```
+
+##

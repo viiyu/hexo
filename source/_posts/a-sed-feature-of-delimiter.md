@@ -15,6 +15,8 @@ sed "s/path/${local_path}/g" tmp.log
 
 其中，后来用别的方法尝试了几次，发现是因为在变量`${local_path}`中包含了'/'。
 
+<!-- more -->
+
 ## 原因
 在sed的info里可以查到关于's'命令中分隔符的描述：
 
