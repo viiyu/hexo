@@ -1,6 +1,6 @@
 title: awk分隔符小记
 date: 2016-08-04 19:33:50
-categories: Pratice
+categories: Practice
 tags:
 	- shell
 	- linux
